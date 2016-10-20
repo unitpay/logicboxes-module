@@ -29,6 +29,7 @@
         $accountingCurrencyAmount = $_GET["accountingcurrencyamount"]; //This refers to the amount of transaction in your Accounting Currency
 
 		$redirectUrl = $_GET["redirecturl"];  //This is the URL on our server, to which you need to send the user once you have finished charging him
+		$resellerCurrency = $_GET["resellerCurrency"];
 
 						
 		$checksum = $_GET["checksum"];	 //checksum for validation
@@ -64,12 +65,12 @@
 			$desc = 'Транзакция #' . $transId;
 
 			$url = 'https://unitpay.ru/pay/' . $public_key;
-	 		//header( 'Location: ' . $url, true, 303 );
 	 		?>
 			<form id="unitpay_form" action="<?php echo $url; ?>">
 			<input type="hidden" name="sum" value="<?php echo $sum; ?>">
 			<input type="hidden" name="desc" value="<?php echo $desc; ?>">
 			<input type="hidden" name="account" value="<?php echo $account; ?>">
+			<input type="hidden" name="currency" value="<?php echo $resellerCurrency; ?>">
 			</form>
 			<script type="text/javascript">
     			document.getElementById('unitpay_form').submit();

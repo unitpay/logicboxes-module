@@ -53,12 +53,12 @@
 		* It is recommended that you make database entry.
 		**/
 
-			$data = [
+			$data = array(
 				$redirectUrl,
 				$transId,
 				$sellingCurrencyAmount,
 				$accountingCurrencyAmount
-			];
+			);
 			
 			$sum = $sellingCurrencyAmount;
 			$account = join('|', $data);

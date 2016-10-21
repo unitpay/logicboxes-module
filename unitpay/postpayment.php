@@ -4,12 +4,6 @@
 	require("functions.php");
 	require("config.php");
 
-	srand((double)microtime()*1000000);
-	$rkey = rand();
-
-
-	$checksum =generateChecksum($transId,$sellingCurrencyAmount,$accountingCurrencyAmount,$status, $rkey,$key);
-
 	function callbackHandler($data)
 	{
 	    $method = '';
@@ -62,18 +56,24 @@
 	}
 	function pay( $params )
 	{
+		global $key;
 
+		srand((double)microtime()*1000000);
+		$rkey = rand();
 
+		$params = $_GET['params'];
 		$data = explode('|', $params['account']);
 
 		$redirectUrl = $data[0];  // redirectUrl received from foundation
 		$transId = $data[1];		 //Pass the same transid which was passsed to your Gateway URL at the beginning of the transaction.
 		$sellingCurrencyAmount = $data[2];
 		$accountingCurrencyAmount = $data[3];
-		global $rkey, $checksum;
 
-		$url = $redirectUrl . '?' . 'transid=' . $transId . '&status=Y' . '&rkey=' . $rkey . '&checksum=' . $checksum . '&sellingamount=' . $sellingCurrencyAmount . '&accountingamount=' . $accountingCurrencyAmount;
+		$status = 'Y';
 
+		$checksum = generateChecksum($transId, $sellingCurrencyAmount, $accountingCurrencyAmount, $status, $rkey, $key);
+
+		$url = $redirectUrl . '?' . 'transid=' . $transId . '&status=' . $status . '&rkey=' . $rkey . '&checksum=' . $checksum . '&sellingamount=' . $sellingCurrencyAmount . '&accountingamount=' . $accountingCurrencyAmount;
 
 		if( $curl = curl_init() ) {
 			curl_setopt($curl, CURLOPT_URL, $url);

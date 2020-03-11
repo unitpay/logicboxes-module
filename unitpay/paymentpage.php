@@ -64,7 +64,7 @@
 			$account = join('|', $data);
 			$desc = 'Транзакция #' . $transId;
 
-			$url = 'https://unitpay.ru/pay/' . $public_key;
+			$url = "https://$domain/pay/" . $public_key;
 	 		?>
 			<form id="unitpay_form" action="<?php echo $url; ?>">
 			<input type="hidden" name="sum" value="<?php echo $sum; ?>">
